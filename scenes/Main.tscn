@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cafy31pa1f6qo"]
+
+[ext_resource type="PackedScene" uid="uid://4h04lmy00vji" path="res://scenes/ShadowArea.tscn" id="1_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://clv7x53f2sa0h" path="res://scenes/Player.tscn" id="2_c01mt"]
+[ext_resource type="PackedScene" uid="uid://bl0xscpjodvbd" path="res://scenes/WingEnemy.tscn" id="3_nxtc6"]
+[ext_resource type="Script" uid="uid://dawr066dbl3dc" path="res://scripts/wing_enemy.gd" id="4_jlsqs"]
+[ext_resource type="PackedScene" uid="uid://xyi5hl2fkkxy" path="res://scenes/AttackSequence.tscn" id="5_q8u5g"]
+
+[node name="Main" type="Node2D" unique_id=1365897423]
+
+[node name="World" type="Node2D" parent="." unique_id=1845802211]
+
+[node name="ShadowArea" parent="World" unique_id=1136899430 instance=ExtResource("1_vcsgt")]
+position = Vector2(368, 206)
+
+[node name="AttackLayer" type="Node2D" parent="." unique_id=1801393718]
+
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=831805933]
+
+[node name="EnemySpawn" type="Marker2D" parent="." unique_id=1596071374]
+position = Vector2(1047, 76)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1487292542]
+
+[node name="Player" parent="." unique_id=316838599 instance=ExtResource("2_c01mt")]
+position = Vector2(20, 12)
+
+[node name="WingEnemy" parent="." unique_id=348167677 instance=ExtResource("3_nxtc6")]
+position = Vector2(1012, 125)
+script = ExtResource("4_jlsqs")
+target_path = NodePath("../Player")
+attack_scene = ExtResource("5_q8u5g")

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://4h04lmy00vji"]
+
+[ext_resource type="Script" uid="uid://df362mgntoqx3" path="res://scripts/shadow_area.gd" id="1_74nyu"]
+[ext_resource type="Texture2D" uid="uid://bqo43pgu0hsfo" path="res://spirits/tile_0000.png" id="1_l0lwg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_74nyu"]
+radius = 64.0
+
+[node name="ShadowArea" type="Area2D" unique_id=1136899430]
+auto_translate_mode = 1
+script = ExtResource("1_74nyu")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=239682905]
+scale = Vector2(5, 5)
+texture = ExtResource("1_l0lwg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1080483003]
+shape = SubResource("CircleShape2D_74nyu")

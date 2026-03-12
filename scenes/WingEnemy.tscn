@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bl0xscpjodvbd"]
+
+[ext_resource type="Texture2D" uid="uid://b3ijhj74uuqhj" path="res://spirits/tile_0008.png" id="1_vae7c"]
+[ext_resource type="Script" uid="uid://dawr066dbl3dc" path="res://scripts/wing_enemy.gd" id="2_bc7yr"]
+
+[node name="WingEnemy" type="Node2D" unique_id=348167677]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1382939351]
+scale = Vector2(10, 10)
+texture = ExtResource("1_vae7c")
+script = ExtResource("2_bc7yr")
