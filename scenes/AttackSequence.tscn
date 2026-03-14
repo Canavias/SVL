@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://bgnik5fpeqqcc" path="res://scripts/attack_sequence.gd" id="1_erm5j"]
 [ext_resource type="Texture2D" uid="uid://cmy8fbm755cl1" path="res://spirits/tile_0009.png" id="1_sacmt"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_q7vb2"]
-radius = 64.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_evxso"]
+size = Vector2(30, 30)
 
 [node name="AttackSequence" type="Node2D" unique_id=2069675166]
 script = ExtResource("1_erm5j")
@@ -18,11 +18,11 @@ texture = ExtResource("1_sacmt")
 [node name="WarningIndicator" type="Sprite2D" parent="." unique_id=1651654217]
 modulate = Color(1, 0.17254902, 0, 1)
 z_index = 10
-position = Vector2(34, 0)
 scale = Vector2(2, 2)
 texture = ExtResource("1_sacmt")
 
 [node name="StrikeArea" type="Area2D" parent="." unique_id=586214081]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StrikeArea" unique_id=1501184430]
-shape = SubResource("CircleShape2D_q7vb2")
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_evxso")

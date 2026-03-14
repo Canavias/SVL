@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://co1ud3blvgkrj"]
+
+[ext_resource type="Script" uid="uid://bbwvq1l7ncqeu" path="res://scripts/shadow_cluster.gd" id="1_12iet"]
+
+[node name="ShadowCluster" type="Node2D" unique_id=1156788859]
+script = ExtResource("1_12iet")
