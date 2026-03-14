@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d3cb3v5ktw4p1" path="res://spirits/tile_0024.png" id="2_gfjak"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gfjak"]
-radius = 16.0
+radius = 46.389652
 
 [node name="Player" type="CharacterBody2D" unique_id=316838599]
 script = ExtResource("1_wr5hl")
@@ -15,4 +15,5 @@ scale = Vector2(5.412303, 5.412303)
 texture = ExtResource("2_gfjak")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1141008733]
+position = Vector2(7, 5)
 shape = SubResource("CircleShape2D_gfjak")

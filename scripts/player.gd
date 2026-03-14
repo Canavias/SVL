@@ -6,12 +6,13 @@ class_name Player
 @export var dash_speed:float=420.0   # 冲刺速度
 @export var dash_duration:float=0.15 # 冲刺时间 
 # 角色状态
-var is_dead:bool=false          #角色是否死亡
-var is_in_shadow:bool=false     #角色是否处于阴影中
-var is_invincible:bool=false    #角色是否处于无敌状态
+var is_dead:bool=false          # 角色是否死亡
+var is_in_shadow:bool=false     # 角色是否处于阴影中
+var is_invincible:bool=false    # 角色是否处于无敌状态
 # 内部运行变量
-var _dash_timer:float=0.0             #冲刺剩余时间
-var _move_input:Vector2=Vector2.ZERO  #当前输入方向
+var _dash_timer:float=0.0             # 冲刺剩余时间
+var _move_input:Vector2=Vector2.ZERO  # 当前输入方向
+var _shadow_overlap_count:int=0       # 暗影重叠计数器
 # 物理帧更新
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -45,10 +46,16 @@ func try_take_light_damage() -> void:
 func die() -> void:
 	is_dead = true
 	queue_free()
-# 暗影状态
-func set_in_shadow(value: bool) -> void:
-	is_in_shadow = value
-	print("is_in_shadow=",is_in_shadow)
+# 进入暗影状态
+func enter_shadow() -> void:
+	_shadow_overlap_count+=1
+	is_in_shadow=_shadow_overlap_count>0
+	print("enter_shadow -> overlap =", _shadow_overlap_count, " is_in_shadow =", is_in_shadow)
+# 退出暗影状态	
+func exit_shadow() -> void:
+	_shadow_overlap_count=max(_shadow_overlap_count-1,0)
+	is_in_shadow=_shadow_overlap_count>0
+	print("enter_shadow -> overlap =", _shadow_overlap_count, " is_in_shadow =", is_in_shadow)
 	
 	
 	

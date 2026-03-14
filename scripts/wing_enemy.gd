@@ -1,4 +1,3 @@
-# 继承和类名
 extends Node2D
 class_name WingEnemy
 # 导出变量
@@ -28,11 +27,8 @@ func _start_attack() -> void:
 		
 	var attack = attack_scene.instantiate()
 	get_tree().current_scene.get_node("AttackLayer").add_child(attack)
-	attack.global_position=_target.global_position
 	attack.setup(_target)
-	
-	print("敌人发动攻击")
-	
+		
 	
 	
 	
