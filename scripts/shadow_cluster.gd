@@ -18,6 +18,10 @@ func generate(tile_count: int) -> void:
 	# 先清空旧数据，避免重复生成时叠加
 	grid_positions.clear()
 
+	# 清空旧的子节点，避免重复生成时叠加旧暗影块
+	for child in get_children():
+		child.queue_free()
+
 	# 至少保证生成 1 个块
 	tile_count = max(tile_count, 1)
 
@@ -29,7 +33,8 @@ func generate(tile_count: int) -> void:
 	for grid_pos in grid_positions:
 		var shadow_tile = shadow_area_scene.instantiate()
 		add_child(shadow_tile)
-		shadow_tile.position = Vector2(grid_pos.x * tile_size, grid_pos.y * tile_size)
+		shadow_tile.position = Vector2i(grid_pos.x * tile_size, grid_pos.y * tile_size)
+
 
 # 将区块网格坐标归一化到左上角，从 (0,0) 开始
 func _normalize_positions(positions: Array[Vector2i]) -> Array[Vector2i]:
@@ -48,6 +53,8 @@ func _normalize_positions(positions: Array[Vector2i]) -> Array[Vector2i]:
 		normalized.append(Vector2i(p.x - min_x, p.y - min_y))
 
 	return normalized
+
+
 # 生成一个“连续且尽量紧凑”的区块形状
 func _generate_cluster_shape(tile_count: int) -> Array[Vector2i]:
 	var result: Array[Vector2i] = []
