@@ -32,7 +32,8 @@ position = Vector2(80, 42)
 scale = Vector2(0.31999967, 0.31999967)
 
 [node name="WingEnemy" parent="." unique_id=348167677 instance=ExtResource("3_nxtc6")]
-position = Vector2(1012, 125)
+position = Vector2(1042, 76)
+scale = Vector2(0.24000001, 0.24000001)
 script = ExtResource("4_jlsqs")
 target_path = NodePath("../Player")
 attack_scene = ExtResource("5_q8u5g")
