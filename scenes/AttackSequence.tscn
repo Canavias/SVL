@@ -26,3 +26,11 @@ texture = ExtResource("1_sacmt")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StrikeArea" unique_id=1501184430]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_evxso")
+
+[node name="QteTimer" type="Timer" parent="." unique_id=254687319]
+wait_time = 0.55
+one_shot = true
+
+[node name="ResolveTimer" type="Timer" parent="." unique_id=287631992]
+wait_time = 0.75
+one_shot = true
