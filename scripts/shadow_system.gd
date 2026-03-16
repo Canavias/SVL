@@ -12,8 +12,8 @@ class_name ShadowSystem
 @export var max_single_tile_clusters: int = 0   # 最多允许多少个“单块区块”
 
 # 地图范围参数
-@export var map_width: float = 1000.0           # 地图宽度
-@export var map_height: float = 500.0           # 地图高度
+@export var map_width: float = 1920.0           # 地图宽度
+@export var map_height: float = 1080.0          # 地图高度
 
 # 区块摆放规则
 @export var cluster_padding: float = 12.0       # 区块之间额外保留的间距
