@@ -10,7 +10,7 @@ class_name AttackSequence
 @export var strike_radius: float = 64.0                 # 攻击范围
 @export var follow_speed: float = 180.0                 # 追踪速度
 
-@export var qte_open_ratio: float = 0.45                # 预警进行到多少比例时开启QTE，越小越简单
+@export var qte_open_ratio: float = 0.45                # 预警进行到多少比例时开启QTE
 @export var warning_start_scale: Vector2 = Vector2(2.0, 2.0)
 @export var warning_end_scale: Vector2 = Vector2(3.0, 3.0)
 @export var warning_flash_speed: float = 10.0
@@ -26,7 +26,12 @@ class_name AttackSequence
 var _phase: int = 0
 var _timer: float = 0.0
 var _phase_total_time: float = 0.0
-var _target: Player = null
+
+# =========================
+# 关联对象
+# =========================
+var _enemy: WingEnemy = null                            # 发起本次攻击的敌人
+var _target: Player = null                              # 被锁定的玩家
 
 # =========================
 # QTE / 结算状态
@@ -44,8 +49,11 @@ var _resolved: bool = false
 
 # =========================
 # 外部初始化
+# enemy: 发动攻击的敌人
+# target: 被锁定的玩家
 # =========================
-func setup(target: Player) -> void:
+func setup(enemy: WingEnemy, target: Player) -> void:
+	_enemy = enemy
 	_target = target
 
 	if _target != null:
@@ -200,9 +208,17 @@ func _resolve_attack_once() -> void:
 
 # =========================
 # 反击成功分支
+# QTE成功后，对敌人造成伤害
 # =========================
 func _on_counter_success() -> void:
 	print("AttackSequence：反击成功，本次攻击失效")
+
+	if _enemy == null:
+		print("AttackSequence：没有敌人引用，无法结算反击伤害")
+		return
+
+	if _enemy.has_method("take_counter_damage"):
+		_enemy.take_counter_damage()
 
 # =========================
 # 攻击范围判定

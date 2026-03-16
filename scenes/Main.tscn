@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cafy31pa1f6qo"]
 
 [ext_resource type="PackedScene" uid="uid://ducb2ivp5gi2u" path="res://scenes/ShadowSystem.tscn" id="1_vcsgt"]
+[ext_resource type="Script" uid="uid://bbnlip0t5baie" path="res://scripts/main.gd" id="1_wp0k4"]
 [ext_resource type="PackedScene" uid="uid://clv7x53f2sa0h" path="res://scenes/Player.tscn" id="2_c01mt"]
 [ext_resource type="Script" uid="uid://dee5yly6d1ne6" path="res://scripts/shadow_system.gd" id="2_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://bl0xscpjodvbd" path="res://scenes/WingEnemy.tscn" id="3_nxtc6"]
@@ -9,8 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://4h04lmy00vji" path="res://scenes/ShadowArea.tscn" id="4_lhr70"]
 [ext_resource type="Script" uid="uid://dldf8sxor7pch" path="res://scripts/qte_hint.gd" id="5_lhr70"]
 [ext_resource type="PackedScene" uid="uid://xyi5hl2fkkxy" path="res://scenes/AttackSequence.tscn" id="5_q8u5g"]
+[ext_resource type="PackedScene" uid="uid://c5oxvrg6vfud4" path="res://scenes/EnemyHpBar.tscn" id="6_lhr70"]
 
 [node name="Main" type="Node2D" unique_id=1365897423]
+script = ExtResource("1_wp0k4")
 
 [node name="World" type="Node2D" parent="." unique_id=1845802211]
 
@@ -24,7 +27,8 @@ shadow_area_scene = ExtResource("4_lhr70")
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=831805933]
 
 [node name="EnemySpawn" type="Marker2D" parent="." unique_id=1596071374]
-position = Vector2(1047, 76)
+position = Vector2(1795, 86)
+scale = Vector2(1.6399994, 1.6399994)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1487292542]
 
@@ -38,10 +42,11 @@ script = ExtResource("5_lhr70")
 [node name="TitleLabel" type="Label" parent="UI/QTEHint" unique_id=1362502098]
 modulate = Color(1, 1, 0.74509805, 1)
 layout_mode = 0
-offset_left = 480.0
-offset_top = 61.0
-offset_right = 611.0
-offset_bottom = 138.0
+offset_left = 779.0
+offset_top = 314.0
+offset_right = 910.0
+offset_bottom = 391.0
+scale = Vector2(1.8400024, 1.8400024)
 theme_override_font_sizes/font_size = 44
 text = "QTE!"
 horizontal_alignment = 1
@@ -49,23 +54,25 @@ horizontal_alignment = 1
 [node name="KeysLabel" type="Label" parent="UI/QTEHint" unique_id=114490912]
 modulate = Color(0.9174596, 0.9544042, 0.9586318, 1)
 layout_mode = 0
-offset_left = 517.0
-offset_top = 132.0
-offset_right = 598.25006
-offset_bottom = 178.25005
-scale = Vector2(0.79999936, 0.79999936)
+offset_left = 827.0
+offset_top = 467.0
+offset_right = 917.3532
+offset_bottom = 511.83694
+scale = Vector2(1.4720008, 1.4720008)
 theme_override_font_sizes/font_size = 28
 text = "1 2 3"
 horizontal_alignment = 1
 
+[node name="EnemyHpBar" parent="UI" unique_id=1914671752 instance=ExtResource("6_lhr70")]
+
 [node name="Player" parent="." unique_id=316838599 instance=ExtResource("2_c01mt")]
 position = Vector2(80, 42)
-scale = Vector2(0.31999967, 0.31999967)
+scale = Vector2(0.7599994, 0.7599994)
 debug_allow_wrong_order = true
 
 [node name="WingEnemy" parent="." unique_id=348167677 instance=ExtResource("3_nxtc6")]
-position = Vector2(1042, 76)
-scale = Vector2(0.24000001, 0.24000001)
+position = Vector2(1790, 86)
+scale = Vector2(0.39359987, 0.39359987)
 script = ExtResource("4_jlsqs")
 target_path = NodePath("../Player")
 attack_scene = ExtResource("5_q8u5g")

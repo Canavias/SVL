@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://c5oxvrg6vfud4"]
+
+[ext_resource type="Script" uid="uid://ruamap4k4e7s" path="res://scripts/enemy_hp_bar.gd" id="1_bp638"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n30a0"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.41960785, 0.22352941, 0.24705882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bp638"]
+bg_color = Color(0.3529412, 0.007843138, 0.03137255, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_bottom = 6
+border_color = Color(0.3882353, 0.22745098, 0.24313726, 1)
+
+[node name="EnemyHpBar" type="Control" unique_id=1914671752]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -100.0
+offset_right = -50.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("1_bp638")
+
+[node name="HpBar" type="ProgressBar" parent="." unique_id=1662012173]
+custom_minimum_size = Vector2(500, 24)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -80.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 43
+theme_override_styles/background = SubResource("StyleBoxFlat_n30a0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bp638")
+value = 100.0
+show_percentage = false
