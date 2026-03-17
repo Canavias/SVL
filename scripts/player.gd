@@ -390,3 +390,9 @@ func _reset_qte_pressed_map() -> void:
 	_qte_pressed_map["qte_1"] = false
 	_qte_pressed_map["qte_2"] = false
 	_qte_pressed_map["qte_3"] = false
+# =========================
+# 返回玩家当前是否处于QTE状态
+# 给摄影机脚本读取
+# =========================
+func is_in_qte() -> bool:
+	return _qte_active
