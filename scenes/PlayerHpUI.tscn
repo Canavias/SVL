@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cdxarh8ao8gbo"]
+
+[ext_resource type="Texture2D" uid="uid://d0a2ae26bx1js" path="res://spirits/icon_heart.png" id="1_cj5kr"]
+[ext_resource type="Script" uid="uid://d05b3kcoufyd2" path="res://scripts/player_hp_ui.gd" id="1_ejkpl"]
+
+[node name="PlayerHpUi" type="Control" unique_id=221857659]
+layout_mode = 3
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 300.0
+offset_bottom = 100.0
+script = ExtResource("1_ejkpl")
+
+[node name="HeartRow" type="HBoxContainer" parent="." unique_id=1427751097]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 65.0
+offset_bottom = 65.0
+theme_override_constants/separation = 14
+
+[node name="HeartTemplate" type="TextureRect" parent="HeartRow" unique_id=1923039008]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_cj5kr")
+expand_mode = 3
+stretch_mode = 5

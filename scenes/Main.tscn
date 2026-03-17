@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dldf8sxor7pch" path="res://scripts/qte_hint.gd" id="5_lhr70"]
 [ext_resource type="PackedScene" uid="uid://xyi5hl2fkkxy" path="res://scenes/AttackSequence.tscn" id="5_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://c5oxvrg6vfud4" path="res://scenes/EnemyHpBar.tscn" id="6_lhr70"]
+[ext_resource type="PackedScene" uid="uid://cdxarh8ao8gbo" path="res://scenes/PlayerHpUI.tscn" id="8_bjd11"]
 
 [node name="Main" type="Node2D" unique_id=1365897423]
 script = ExtResource("1_wp0k4")
@@ -64,6 +65,13 @@ text = "1 2 3"
 horizontal_alignment = 1
 
 [node name="EnemyHpBar" parent="UI" unique_id=1914671752 instance=ExtResource("6_lhr70")]
+
+[node name="PlayerHpUi" parent="UI" unique_id=221857659 instance=ExtResource("8_bjd11")]
+anchors_preset = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 280.0
+offset_bottom = 80.0
 
 [node name="Player" parent="." unique_id=316838599 instance=ExtResource("2_c01mt")]
 position = Vector2(80, 42)
