@@ -1,34 +1,24 @@
 extends Node2D
 class_name WingEnemy
 
-# =========================
 # 导出参数
-# =========================
-@export var target_path: NodePath                      # 锁定的玩家节点
-@export var attack_scene: PackedScene                  # 生成的攻击场景
-@export var attack_interval: float = 3.0               # 攻击间隔
+@export var target_path: NodePath                                      # 锁定的玩家节点
+@export var attack_scene: PackedScene                                  # 生成的攻击场景
+@export var attack_interval: float = 3.0                               # 攻击间隔
+@export var max_hp: int = 10                                           # 最大血量
+@export var counter_damage: int = 3                                    # QTE反击默认伤害
 
-@export var max_hp: int = 10                           # 最大血量
-@export var counter_damage: int = 3                    # QTE反击默认伤害
-
-# =========================
 # 运行时变量
-# =========================
-var current_hp: int = 0                                # 当前血量
-var is_dead: bool = false                              # 是否死亡
+var current_hp: int = 0                                                # 当前血量
+var is_dead: bool = false                                              # 是否死亡
+var _target: Player = null                                             # 当前目标玩家
+var _cooldown: float = 0.0                                             # 攻击冷却计时
 
-var _target: Player = null                             # 当前目标玩家
-var _cooldown: float = 0.0                             # 攻击冷却计时
-
-# =========================
 # 信号
-# =========================
-signal hp_changed(current_hp: int, max_hp: int)        # 血量变化时发出
-signal died(enemy: WingEnemy)                          # 死亡时发出
+signal hp_changed(current_hp: int, max_hp: int)                        # 血量变化时发出
+signal died(enemy: WingEnemy)                                          # 死亡时发出
 
-# =========================
 # 初始化
-# =========================
 func _ready() -> void:
 	current_hp = max_hp
 
@@ -37,18 +27,9 @@ func _ready() -> void:
 
 	_emit_hp_changed()
 
-# =========================
 # 每帧处理
-# 冷却结束后发动攻击
-# =========================
 func _process(delta: float) -> void:
-	if is_dead:
-		return
-
-	if _target == null:
-		return
-
-	if _target.is_dead:
+	if is_dead or _target == null or _target.is_dead:
 		return
 
 	_cooldown -= delta
@@ -56,10 +37,7 @@ func _process(delta: float) -> void:
 		_cooldown = attack_interval
 		_start_attack()
 
-# =========================
 # 发动攻击
-# 生成攻击场景，并把自己和目标都传进去
-# =========================
 func _start_attack() -> void:
 	if attack_scene == null:
 		return
@@ -70,15 +48,9 @@ func _start_attack() -> void:
 	if attack.has_method("setup"):
 		attack.setup(self, _target)
 
-# =========================
 # 通用受伤接口
-# damage: 本次受到的伤害
-# =========================
 func take_damage(damage: int) -> void:
-	if is_dead:
-		return
-
-	if damage <= 0:
+	if is_dead or damage <= 0:
 		return
 
 	current_hp -= damage
@@ -90,15 +62,11 @@ func take_damage(damage: int) -> void:
 	if current_hp <= 0:
 		die()
 
-# =========================
 # QTE反击伤害
-# =========================
 func take_counter_damage() -> void:
 	take_damage(counter_damage)
 
-# =========================
 # 死亡逻辑
-# =========================
 func die() -> void:
 	if is_dead:
 		return
@@ -109,17 +77,13 @@ func die() -> void:
 	died.emit(self)
 	queue_free()
 
-# =========================
 # 获取当前血量比例
-# 给UI拓展时可用
-# =========================
 func get_hp_ratio() -> float:
 	if max_hp <= 0:
 		return 0.0
+
 	return float(current_hp) / float(max_hp)
 
-# =========================
 # 发出血量变化信号
-# =========================
 func _emit_hp_changed() -> void:
 	hp_changed.emit(current_hp, max_hp)

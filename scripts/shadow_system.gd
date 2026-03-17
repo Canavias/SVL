@@ -2,37 +2,36 @@ extends Node2D
 class_name ShadowSystem
 
 # 场景引用
-@export var shadow_cluster_scene: PackedScene   # 区块场景模板
-@export var shadow_area_scene: PackedScene      # 单块场景模板
+@export var shadow_cluster_scene: PackedScene                          # 区块场景模板
+@export var shadow_area_scene: PackedScene                             # 单块场景模板
 
 # 区块数量和大小规则
-@export var cluster_count: int = 8              # 要生成的暗影区块总数
-@export var min_tiles_per_cluster: int = 4      # 每个区块最少单块数
-@export var max_tiles_per_cluster: int = 8      # 每个区块最多单块数
-@export var max_single_tile_clusters: int = 0   # 最多允许多少个“单块区块”
+@export var cluster_count: int = 8                                     # 要生成的暗影区块总数
+@export var min_tiles_per_cluster: int = 4                             # 每个区块最少单块数
+@export var max_tiles_per_cluster: int = 8                             # 每个区块最多单块数
+@export var max_single_tile_clusters: int = 0                          # 最多允许多少个单块区块
 
 # 地图范围参数
-@export var map_width: float = 1920.0           # 地图宽度
-@export var map_height: float = 1080.0          # 地图高度
+@export var map_width: float = 1920.0                                  # 地图宽度
+@export var map_height: float = 1080.0                                 # 地图高度
 
 # 区块摆放规则
-@export var cluster_padding: float = 12.0       # 区块之间额外保留的间距
-@export var max_place_try: int = 150            # 每个区块最多尝试摆放次数
+@export var cluster_padding: float = 12.0                              # 区块之间额外保留的间距
+@export var max_place_try: int = 150                                   # 每个区块最多尝试摆放次数
 
 # 调试参数
-@export var print_debug_log: bool = true        # 是否打印调试日志
+@export var print_debug_log: bool = true                               # 是否打印调试日志
 
 # 刷新参数
-@export var enable_auto_refresh: bool = true    # 是否启用自动刷新
-@export var refresh_interval: float = 5.0       # 每隔多少秒重新生成一次暗影区域
+@export var enable_auto_refresh: bool = true                           # 是否启用自动刷新
+@export var refresh_interval: float = 5.0                              # 每隔多少秒重新生成一次暗影区域
 
 # 单块尺寸参数
-@export var shadow_tile_size: int = 40          # 暗影单块统一尺寸，同时用于区块延伸步长
+@export var shadow_tile_size: int = 40                                 # 暗影单块统一尺寸，同时用于区块延伸步长
 
 # 运行状态
-var _is_refreshing: bool = false                # 是否正在刷新暗影区域
-var _refresh_timer: Timer = null                # 自动刷新的计时器
-
+var _is_refreshing: bool = false                                       # 是否正在刷新暗影区域
+var _refresh_timer: Timer = null                                       # 自动刷新的计时器
 
 # 初始化
 func _ready() -> void:
@@ -41,7 +40,6 @@ func _ready() -> void:
 	# 启动自动刷新
 	if enable_auto_refresh:
 		_start_refresh_timer()
-
 
 # 启动定时刷新
 func _start_refresh_timer() -> void:
@@ -57,14 +55,13 @@ func _start_refresh_timer() -> void:
 	add_child(_refresh_timer)
 	_refresh_timer.timeout.connect(_on_refresh_timer_timeout)
 
-
 # 生成所有暗影区块
 func generate_shadow_clusters() -> void:
 	if print_debug_log:
 		print("=== generate_shadow_clusters start ===")
 
-	var single_tile_cluster_count: int = 0   # 当前已经生成的单块区块数量
-	var placed_rects: Array[Rect2] = []       # 记录已放置区块的世界包围盒
+	var single_tile_cluster_count: int = 0                               # 当前已经生成的单块区块数量
+	var placed_rects: Array[Rect2] = []                                  # 记录已放置区块的世界包围盒
 
 	# 循环生成多个区块
 	for i in range(cluster_count):
@@ -106,8 +103,7 @@ func generate_shadow_clusters() -> void:
 			continue
 
 		# 设置区块位置
-		cluster.position = Vector2i(cluster_pos.x, cluster_pos.y)
-
+		cluster.position = cluster_pos
 		# 记录该区块放到世界中的真实包围盒
 		var world_rect := Rect2(cluster_pos + local_bounds.position, local_bounds.size)
 		placed_rects.append(world_rect)
@@ -118,7 +114,6 @@ func generate_shadow_clusters() -> void:
 
 	if print_debug_log:
 		print("=== generate_shadow_clusters end ===")
-
 
 # 随机决定区块大小
 func _roll_cluster_size() -> int:
@@ -149,7 +144,6 @@ func _roll_cluster_size() -> int:
 			max_tiles_per_cluster
 		)
 
-
 # 为区块寻找合适位置
 func _find_valid_cluster_position(cluster_bounds: Rect2, placed_rects: Array[Rect2]) -> Vector2:
 	# 如果地图范围比当前区块还小，直接失败
@@ -157,16 +151,12 @@ func _find_valid_cluster_position(cluster_bounds: Rect2, placed_rects: Array[Rec
 		return Vector2.INF
 
 	# 随机尝试多个候选位置
-	for i in range(max_place_try):
-		# 这里直接用左上角坐标系，而不是以中心为原点
+	for _i in range(max_place_try):
 		var candidate := Vector2(
 			round(randf_range(0.0, map_width - cluster_bounds.size.x)),
 			round(randf_range(0.0, map_height - cluster_bounds.size.y))
 		)
 
-		# 计算当前候选位置下，该区块在世界中的包围盒
-		# 注意：这里不再额外加 cluster_bounds.position
-		# 因为后面我们会让区块内部坐标从 (0,0) 开始排布
 		var test_rect := Rect2(candidate, cluster_bounds.size)
 
 		# 检查是否与已放置区块重叠或过近
@@ -183,13 +173,11 @@ func _find_valid_cluster_position(cluster_bounds: Rect2, placed_rects: Array[Rec
 	# 找不到合法位置时，明确标记为失败
 	return Vector2.INF
 
-
 # 清除当前所有暗影区块
 func clear_shadow_clusters() -> void:
 	for child in get_children():
 		if child is ShadowCluster:
 			child.queue_free()
-
 
 # 重新生成暗影区块
 func refresh_shadow_clusters() -> void:
@@ -207,7 +195,6 @@ func refresh_shadow_clusters() -> void:
 	generate_shadow_clusters()
 
 	_is_refreshing = false
-
 
 # 定时器触发：重新生成暗影区块
 func _on_refresh_timer_timeout() -> void:

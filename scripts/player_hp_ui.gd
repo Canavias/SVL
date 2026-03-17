@@ -1,30 +1,20 @@
 extends Control
 class_name PlayerHpUI
 
-# =========================
 # 节点引用
-# =========================
-@onready var heart_row: HBoxContainer = $HeartRow
-@onready var heart_template: TextureRect = $HeartRow/HeartTemplate
+@onready var heart_row: HBoxContainer = $HeartRow                      # 心形容器
+@onready var heart_template: TextureRect = $HeartRow/HeartTemplate     # 心形模板节点
 
-# =========================
 # 血量显示配置
-# =========================
-@export var max_hearts: int = 5               # 默认最多显示多少颗心
-var _heart_nodes: Array[TextureRect] = []     # 当前实际管理的心节点列表
+@export var max_hearts: int = 5                                        # 默认最多显示多少颗心
+var _heart_nodes: Array[TextureRect] = []                              # 当前实际管理的心节点列表
 
-# =========================
 # 初始化
-# 进入场景后自动生成心节点
-# =========================
 func _ready() -> void:
 	_build_hearts(max_hearts)
 	update_hp(max_hearts, max_hearts)
 
-# =========================
 # 根据最大血量生成心节点
-# total_hearts: 需要生成的总心数
-# =========================
 func _build_hearts(total_hearts: int) -> void:
 	# 先清空旧的缓存
 	_heart_nodes.clear()
@@ -43,14 +33,7 @@ func _build_hearts(total_hearts: int) -> void:
 		heart_row.add_child(new_heart)
 		_heart_nodes.append(new_heart)
 
-# =========================
 # 刷新血量显示
-# current_hp: 当前血量
-# max_hp: 最大血量
-# 规则：
-# - 前 current_hp 颗心显示
-# - 后面的心隐藏
-# =========================
 func update_hp(current_hp: int, max_hp: int) -> void:
 	# 如果最大血量变化了，且和当前节点数量不同，则重新构建
 	if max_hp != _heart_nodes.size():
@@ -60,9 +43,7 @@ func update_hp(current_hp: int, max_hp: int) -> void:
 		var heart := _heart_nodes[i]
 		heart.visible = i < current_hp
 
-# =========================
 # 当最大血量和当前心节点数量不一致时，彻底重建
-# =========================
 func _rebuild_all_hearts(new_max_hp: int) -> void:
 	# 删除 HeartRow 下面已有的所有子节点
 	for child in heart_row.get_children():
