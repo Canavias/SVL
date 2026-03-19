@@ -85,7 +85,6 @@ func _enter_lock_phase() -> void:
 	_player_countered = false
 	_resolved = false
 
-	print("AttackSequence：进入锁定阶段")
 
 # 预警阶段
 func _enter_warning_phase() -> void:
@@ -100,7 +99,6 @@ func _enter_warning_phase() -> void:
 	warning_indicator.scale = warning_start_scale
 	warning_indicator.modulate = warning_start_color
 
-	print("AttackSequence：进入预警阶段")
 
 # 攻击阶段
 func _enter_strike_phase() -> void:
@@ -112,7 +110,6 @@ func _enter_strike_phase() -> void:
 	warning_indicator.visible = false
 	strike_area.monitoring = true
 
-	print("AttackSequence：进入攻击阶段，开始结算")
 	_resolve_attack_once()
 
 # 在预警阶段开启QTE
@@ -129,7 +126,6 @@ func _try_open_qte_in_warning_phase() -> void:
 		if _target.has_method("begin_qte"):
 			_target.begin_qte(self)
 
-		print("AttackSequence：QTE窗口开启")
 
 # 玩家QTE成功时，由Player回调
 func on_player_qte_success(player: Player) -> void:
@@ -137,7 +133,6 @@ func on_player_qte_success(player: Player) -> void:
 		return
 
 	_player_countered = true
-	print("AttackSequence：玩家QTE成功，本次攻击将被反击")
 
 # 攻击只结算一次
 func _resolve_attack_once() -> void:
@@ -154,21 +149,15 @@ func _resolve_attack_once() -> void:
 		return
 
 	if _target == null:
-		print("AttackSequence：没有目标，攻击结束")
 		return
 
 	if _is_target_inside_strike_range():
-		print("AttackSequence：玩家未完成QTE，攻击命中")
 		_target.try_take_light_damage()
-	else:
-		print("AttackSequence：玩家已离开攻击范围，本次攻击落空")
 
 # 反击成功分支
 func _on_counter_success() -> void:
-	print("AttackSequence：反击成功，本次攻击失效")
 
 	if _enemy == null:
-		print("AttackSequence：没有敌人引用，无法结算反击伤害")
 		return
 
 	if _enemy.has_method("take_counter_damage"):

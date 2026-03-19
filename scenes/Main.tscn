@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://id02i8b70peq" path="res://scripts/player_camera.gd" id="13_qmy6f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qmy6f"]
-size = Vector2(1461.7832, 66.125)
+size = Vector2(1477, 66.125)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mwfav"]
 size = Vector2(65, 803)
@@ -32,6 +32,8 @@ script = ExtResource("1_wp0k4")
 script = ExtResource("2_jlsqs")
 shadow_cluster_scene = ExtResource("3_q8u5g")
 shadow_area_scene = ExtResource("4_lhr70")
+countdown_label_path = NodePath("../../UI/ShadowCountdown")
+countdown_prefix = ""
 
 [node name="AttackLayer" type="Node2D" parent="." unique_id=1801393718]
 
@@ -84,6 +86,14 @@ offset_top = 0.0
 offset_right = 280.0
 offset_bottom = 80.0
 
+[node name="ShadowCountdown" type="Label" parent="UI" unique_id=1399759495]
+offset_left = 868.0
+offset_top = 195.0
+offset_right = 1224.0
+offset_bottom = 413.0
+theme_override_font_sizes/font_size = 30
+text = "5.0s"
+
 [node name="Player" parent="." unique_id=316838599 instance=ExtResource("2_c01mt")]
 position = Vector2(451, 278)
 scale = Vector2(0.7599994, 0.7599994)
@@ -117,7 +127,7 @@ shape = SubResource("RectangleShape2D_qmy6f")
 [node name="WallBottom" type="StaticBody2D" parent="WorldBounds" unique_id=363596608]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/WallBottom" unique_id=2078036468]
-position = Vector2(924.1084, 887)
+position = Vector2(916.5, 887)
 shape = SubResource("RectangleShape2D_qmy6f")
 
 [node name="WallLeft" type="StaticBody2D" parent="WorldBounds" unique_id=1802780097]
