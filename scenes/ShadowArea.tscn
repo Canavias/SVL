@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://4h04lmy00vji"]
 
 [ext_resource type="Script" uid="uid://df362mgntoqx3" path="res://scripts/shadow_area.gd" id="1_74nyu"]
-[ext_resource type="Texture2D" uid="uid://bqo43pgu0hsfo" path="res://spirits/tile_0000.png" id="1_l0lwg"]
+[ext_resource type="Texture2D" uid="uid://dc7hqrx7fd3u2" path="res://spirits/1tile_0000.png" id="2_ckng2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ckng2"]
 size = Vector2(17.213114, 17.213114)
@@ -12,7 +12,7 @@ scale = Vector2(2.44, 2.44)
 script = ExtResource("1_74nyu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=239682905]
-texture = ExtResource("1_l0lwg")
+texture = ExtResource("2_ckng2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1080483003]
 shape = SubResource("RectangleShape2D_ckng2")
