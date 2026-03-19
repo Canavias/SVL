@@ -2,15 +2,23 @@
 
 [ext_resource type="PackedScene" uid="uid://ducb2ivp5gi2u" path="res://scenes/ShadowSystem.tscn" id="1_vcsgt"]
 [ext_resource type="Script" uid="uid://bbnlip0t5baie" path="res://scripts/main.gd" id="1_wp0k4"]
+[ext_resource type="Script" uid="uid://wqdsuhr3hdtq" path="res://scripts/map.gd" id="2_3p2gp"]
 [ext_resource type="PackedScene" uid="uid://clv7x53f2sa0h" path="res://scenes/Player.tscn" id="2_c01mt"]
 [ext_resource type="Script" uid="uid://dee5yly6d1ne6" path="res://scripts/shadow_system.gd" id="2_jlsqs"]
+[ext_resource type="Texture2D" uid="uid://bqo43pgu0hsfo" path="res://spirits/tile_0000.png" id="2_mwfav"]
+[ext_resource type="Texture2D" uid="uid://bajcai8b2htyc" path="res://spirits/tile_0044.png" id="3_1iba3"]
 [ext_resource type="PackedScene" uid="uid://bl0xscpjodvbd" path="res://scenes/WingEnemy.tscn" id="3_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://co1ud3blvgkrj" path="res://scenes/ShadowCluster.tscn" id="3_q8u5g"]
 [ext_resource type="Script" uid="uid://dawr066dbl3dc" path="res://scripts/wing_enemy.gd" id="4_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://4h04lmy00vji" path="res://scenes/ShadowArea.tscn" id="4_lhr70"]
+[ext_resource type="Texture2D" uid="uid://csx1m108u62ss" path="res://spirits/tile_0045.png" id="4_yxlcp"]
+[ext_resource type="Texture2D" uid="uid://c2u2bafsmk02t" path="res://spirits/tile_0046.png" id="5_ebg2g"]
 [ext_resource type="Script" uid="uid://dldf8sxor7pch" path="res://scripts/qte_hint.gd" id="5_lhr70"]
 [ext_resource type="PackedScene" uid="uid://xyi5hl2fkkxy" path="res://scenes/AttackSequence.tscn" id="5_q8u5g"]
+[ext_resource type="Texture2D" uid="uid://cv56iwkqlqech" path="res://spirits/tile_0059.png" id="6_2ofn6"]
 [ext_resource type="PackedScene" uid="uid://c5oxvrg6vfud4" path="res://scenes/EnemyHpBar.tscn" id="6_lhr70"]
+[ext_resource type="Texture2D" uid="uid://ddi8hekrotc2m" path="res://spirits/tile_0068.png" id="7_xa025"]
+[ext_resource type="Texture2D" uid="uid://c5veeox8c2hb" path="res://spirits/tile_0070.png" id="8_36rkl"]
 [ext_resource type="PackedScene" uid="uid://cdxarh8ao8gbo" path="res://scenes/PlayerHpUI.tscn" id="8_bjd11"]
 [ext_resource type="Script" uid="uid://id02i8b70peq" path="res://scripts/player_camera.gd" id="13_qmy6f"]
 
@@ -26,12 +34,39 @@ size = Vector2(74, 803.0625)
 [node name="Main" type="Node2D" unique_id=1365897423]
 script = ExtResource("1_wp0k4")
 
+[node name="Map" type="Node2D" parent="." unique_id=192041803]
+script = ExtResource("2_3p2gp")
+top_left_path = NodePath("../WorldBounds/TopLeft")
+bottom_right_path = NodePath("../WorldBounds/BottomRight")
+tile_top_left = ExtResource("3_1iba3")
+tile_top = ExtResource("4_yxlcp")
+tile_top_right = ExtResource("5_ebg2g")
+tile_side = ExtResource("6_2ofn6")
+tile_bottom_left = ExtResource("7_xa025")
+tile_bottom_right = ExtResource("8_36rkl")
+
+[node name="Ground" type="Sprite2D" parent="Map" unique_id=2081425398]
+z_index = -20
+position = Vector2(935.5001, 491)
+scale = Vector2(208.31252, 128.12502)
+texture = ExtResource("2_mwfav")
+
+[node name="FenceTop" type="Node2D" parent="Map" unique_id=1846224374]
+
+[node name="FenceBottom" type="Node2D" parent="Map" unique_id=1876975250]
+
+[node name="FenceLeft" type="Node2D" parent="Map" unique_id=1543831233]
+
+[node name="FenceRight" type="Node2D" parent="Map" unique_id=346059268]
+
 [node name="World" type="Node2D" parent="." unique_id=1845802211]
 
 [node name="ShadowSystem" parent="World" unique_id=69646774 instance=ExtResource("1_vcsgt")]
 script = ExtResource("2_jlsqs")
 shadow_cluster_scene = ExtResource("3_q8u5g")
 shadow_area_scene = ExtResource("4_lhr70")
+top_left_path = NodePath("../../WorldBounds/TopLeft")
+bottom_right_path = NodePath("../../WorldBounds/BottomRight")
 countdown_label_path = NodePath("../../UI/ShadowCountdown")
 countdown_prefix = ""
 
@@ -42,6 +77,55 @@ countdown_prefix = ""
 [node name="EnemySpawn" type="Marker2D" parent="." unique_id=1596071374]
 position = Vector2(1795, 86)
 scale = Vector2(1.6399994, 1.6399994)
+
+[node name="Player" parent="." unique_id=316838599 instance=ExtResource("2_c01mt")]
+position = Vector2(451, 278)
+scale = Vector2(0.7599994, 0.7599994)
+debug_allow_wrong_order = true
+
+[node name="WingEnemy" parent="." unique_id=348167677 instance=ExtResource("3_nxtc6")]
+position = Vector2(1790, 86)
+scale = Vector2(0.39359987, 0.39359987)
+script = ExtResource("4_jlsqs")
+target_path = NodePath("../Player")
+attack_scene = ExtResource("5_q8u5g")
+
+[node name="PlayerCamera" type="Camera2D" parent="." unique_id=1697357217]
+script = ExtResource("13_qmy6f")
+player_path = NodePath("../Player")
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=1230860556]
+
+[node name="TopLeft" type="Marker2D" parent="WorldBounds" unique_id=278984682]
+position = Vector2(157, 149)
+
+[node name="BottomRight" type="Marker2D" parent="WorldBounds" unique_id=130091964]
+position = Vector2(1668, 886)
+
+[node name="WallTop" type="StaticBody2D" parent="WorldBounds" unique_id=2105229953]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/WallTop" unique_id=1892305816]
+position = Vector2(916.21674, 151)
+shape = SubResource("RectangleShape2D_qmy6f")
+
+[node name="WallBottom" type="StaticBody2D" parent="WorldBounds" unique_id=363596608]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/WallBottom" unique_id=2078036468]
+position = Vector2(916.5, 887)
+shape = SubResource("RectangleShape2D_qmy6f")
+
+[node name="WallLeft" type="StaticBody2D" parent="WorldBounds" unique_id=1802780097]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/WallLeft" unique_id=780626974]
+position = Vector2(1673.5, 519.5)
+shape = SubResource("RectangleShape2D_mwfav")
+
+[node name="WallRight" type="StaticBody2D" parent="WorldBounds" unique_id=1651818883]
+position = Vector2(-56, -103)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/WallRight" unique_id=2086274826]
+position = Vector2(208, 622.46875)
+shape = SubResource("RectangleShape2D_3p2gp")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1487292542]
 
@@ -80,7 +164,6 @@ horizontal_alignment = 1
 grow_vertical = 0
 
 [node name="PlayerHpUi" parent="UI" unique_id=221857659 instance=ExtResource("8_bjd11")]
-anchors_preset = 0
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 280.0
@@ -93,52 +176,3 @@ offset_right = 1224.0
 offset_bottom = 413.0
 theme_override_font_sizes/font_size = 30
 text = "5.0s"
-
-[node name="Player" parent="." unique_id=316838599 instance=ExtResource("2_c01mt")]
-position = Vector2(451, 278)
-scale = Vector2(0.7599994, 0.7599994)
-debug_allow_wrong_order = true
-
-[node name="WingEnemy" parent="." unique_id=348167677 instance=ExtResource("3_nxtc6")]
-position = Vector2(1790, 86)
-scale = Vector2(0.39359987, 0.39359987)
-script = ExtResource("4_jlsqs")
-target_path = NodePath("../Player")
-attack_scene = ExtResource("5_q8u5g")
-
-[node name="PlayerCamera" type="Camera2D" parent="." unique_id=1697357217]
-script = ExtResource("13_qmy6f")
-player_path = NodePath("../Player")
-
-[node name="WorldBounds" type="Node2D" parent="." unique_id=1230860556]
-
-[node name="TopLeft" type="Marker2D" parent="WorldBounds" unique_id=278984682]
-position = Vector2(193, 196)
-
-[node name="BottomRight" type="Marker2D" parent="WorldBounds" unique_id=130091964]
-position = Vector2(1635, 829)
-
-[node name="WallTop" type="StaticBody2D" parent="WorldBounds" unique_id=2105229953]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/WallTop" unique_id=1892305816]
-position = Vector2(916.21674, 151)
-shape = SubResource("RectangleShape2D_qmy6f")
-
-[node name="WallBottom" type="StaticBody2D" parent="WorldBounds" unique_id=363596608]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/WallBottom" unique_id=2078036468]
-position = Vector2(916.5, 887)
-shape = SubResource("RectangleShape2D_qmy6f")
-
-[node name="WallLeft" type="StaticBody2D" parent="WorldBounds" unique_id=1802780097]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/WallLeft" unique_id=780626974]
-position = Vector2(1673.5, 519.5)
-shape = SubResource("RectangleShape2D_mwfav")
-
-[node name="WallRight" type="StaticBody2D" parent="WorldBounds" unique_id=1651818883]
-position = Vector2(-56, -103)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/WallRight" unique_id=2086274826]
-position = Vector2(208, 622.46875)
-shape = SubResource("RectangleShape2D_3p2gp")
